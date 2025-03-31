@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вход - ReLove</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="form-section">
+    <div class="form-container">
+        <h2>Вход</h2>
+        <form th:action="@{/login}"
+              th:method="POST"
+            >
+
+            <div th:if="${param.error}" class="text-danger">Error messages</div>
+            <div th:if="${param.error}" class="text-danger">Incorrect username or password!</div>
+
+            <div class="input-group">
+                <label for="email">Имейл</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                >
+            </div>
+            <div class="input-group">
+                <label for="password">Парола</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="submit-btn">Вход</button>
+        </form>
+
+        <p style="margin-top: 20px;">Нямате акаунт? <a th:href="@{/register}">Регистрирайте се тук</a>.</p>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="fragments/commons :: footer"></div>
+
+</body>
+</html>

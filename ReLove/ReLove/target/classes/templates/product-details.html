@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${product.name}">Продукт - ReLove</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Основен стил -->
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+
+<!-- Header -->
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="product-detail-section">
+
+    <div class="product-detail-container">
+        <div class="product-detail-image">
+            <img th:src="${product.imageUrl}" alt="Product">
+        </div>
+        <div class="product-detail-info">
+            <h2 th:text="${product.name}">Име на продукт</h2>
+            <p th:text="${product.description}">Описание на продукта...</p>
+            <p class="product-price" th:text="${#numbers.formatDecimal(product.price, 1, 2) + ' лева'}">Цена</p>
+            <p>Продавач: <span th:text="${product.seller.name}">Име</span></p>
+
+            <div class="buttons">
+                <a th:href="@{/add-to-cart/{id}(id=${product.id})}" class="btn">
+                    <i class="fas fa-shopping-cart"></i> Добави в количка
+                </a>
+                <span th:if="${#authentication.authenticated}">
+        <a th:if="${isFavorite == false}" th:href="@{/add-to-favorites/{id}(id=${product.id})}" class="btn">
+            <i class="fas fa-heart"></i> Добави в любими
+        </a>
+        <a th:if="${isFavorite == true}" th:href="@{/remove-favorite/{id}(id=${product.id})}" class="btn">
+            <i class="fas fa-heart-broken"></i> Премахни от любими
+        </a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="decorative-divider">✽ ✽ ✽</div>
+
+    <div class="reviews-section">
+        <h3>Ревюта</h3>
+
+        <!-- Динамичен лист с ревюта -->
+        <!--   <div th:each="review : ${reviews}" class="review-item">
+               <p><strong th:text="${review.userEntity.name}">Потребител</strong>:</p>
+               <p th:text="${review.comment}">Коментар...</p>
+               <p>Оценка: <span th:text="${review.rating}">5</span>/5</p>
+           </div> -->
+
+           <!-- Форма за ново ревю -->
+        <form th:action="@{/add-review/{id}(id=${product.id})}" method="post">
+            <textarea name="comment" placeholder="Вашето ревю..." required></textarea><br><br>
+            <label>Оценка:
+                <select name="rating">
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+            </label><br><br>
+            <button type="submit" class="btn">Добави ревю</button>
+        </form>
+
+    </div>
+
+    <div class="product-actions" style="margin-top: 40px;">
+        <a th:href="@{/products/all}" class="explore-btn">← Назад към всички продукти</a>
+
+        <span th:if="${#authentication.principal.username == product.seller.email}">
+          <a th:href="@{/products/edit/{id}(id=${product.id})}" class="edit-btn" >Редактирай</a>
+        <a th:href="@{/delete-product/{id}(id=${product.id})}" class="remove-btn">Премахни</a>
+    </span>
+    </div>
+</section>
+
+
+<div th:replace="fragments/commons :: footer"></div>
+
+</body>
+</html>

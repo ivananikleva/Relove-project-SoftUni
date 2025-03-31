@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Редакция на профил</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="form-section">
+    <div class="form-container">
+        <h2>Редакция на профил</h2>
+
+        <form th:action="@{/profile/edit}" method="post" th:object="${userRegisterDTO}">
+
+            <div class="input-group">
+                <label for="name">Име</label>
+                <input type="text" id="name" th:field="*{name}" />
+                <p class="error-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Имейл</label>
+                <input type="email" id="email" th:field="*{email}" />
+                <p class="error-msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Нова парола</label>
+                <input type="password" id="password" th:field="*{password}" />
+                <p class="error-msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+            </div>
+
+            <button type="submit" class="submit-btn">Запази промените</button>
+        </form>
+    </div>
+</section>
+
+<div th:replace="fragments/commons :: footer"></div>
+</body>
+</html>

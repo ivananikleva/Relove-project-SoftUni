@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Редакция на продукт</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="form-section">
+    <div class="form-container">
+        <h2>Редакция на продукт</h2>
+        <form th:action="@{'/products/edit/' + ${productId}}" th:object="${productAddDTO}" method="post" enctype="multipart/form-data">
+            <div class="input-group">
+                <label>Име:</label>
+                <input type="text" th:field="*{name}" required/>
+            </div>
+            <div class="input-group">
+                <label>Описание:</label>
+                <input type="text" th:field="*{description}" required/>
+            </div>
+            <div class="input-group">
+                <label>Цена:</label>
+                <input type="number" th:field="*{price}" min="0" step="0.01" required/>
+            </div>
+            <div class="input-group">
+                <label>Нова снимка:</label>
+                <input type="file" th:field="*{image}"/>
+            </div>
+            <button type="submit" class="submit-btn">Запази промените</button>
+        </form>
+    </div>
+</section>
+
+<div th:replace="fragments/commons :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Поръчка приета - ReLove</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="confirmation-section">
+    <div class="confirmation-card">
+        <i class="fas fa-check-circle confirmation-icon"></i>
+        <h2 class="confirmation-title">Благодарим ви за поръчката!</h2>
+        <p class="confirmation-message">Вашата поръчка беше приета успешно на <span th:text="${orderDate}">дата</span>.</p>
+        <a href="/" class="explore-btn">Продължи с разглеждане</a>
+    </div>
+</section>
+
+<div th:replace="fragments/commons :: footer"></div>
+</body>
+</html>

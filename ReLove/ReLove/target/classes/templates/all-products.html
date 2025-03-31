@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Всички продукти - ReLove</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<!-- Вмъкване на Header -->
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="products-section">
+    <h2>Всички продукти</h2>
+    <p>Разгледай нашите предложения</p>
+
+    <ul class="products-grid">
+        <li th:each="product : ${allProducts}" class="product">
+            <a th:href="@{/products/details/{id}(id=${product.id})}">
+                <img th:src="${product.imageUrl}" alt="Продукт">
+            </a>
+            <div class="product-info">
+                <h3 th:text="${product.name}">Име на продукт</h3>
+                <p th:text="${#numbers.formatDecimal(product.price, 1, 2) + ' лева'}">Цена</p>
+            </div>
+        </li>
+    </ul>
+
+
+</section>
+
+<!-- Вмъкване на Footer -->
+<div th:replace="fragments/commons :: footer"></div>
+
+</body>
+</html>

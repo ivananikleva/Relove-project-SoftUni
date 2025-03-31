@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ReLove</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<header>
+    <nav>
+        <a th:href="@{/}">Начало</a>
+        <a th:href="@{/products/all}">Продукти</a>
+        <a th:href="@{/about}">За нас</a>
+        <a th:href="@{/contacts}">Контакт</a>
+    </nav>
+
+    <div class="buttons">
+
+        <!-- Само за НЕлогнати потребители -->
+        <span sec:authorize="!isAuthenticated()">
+        <a th:href="@{/login}"><i class="fas fa-right-to-bracket"></i> Вход</a>
+        <a th:href="@{/register}"><i class="fas fa-user-plus"></i> Регистрация</a>
+    </span>
+
+        <!-- Само за логнати потребители -->
+        <span sec:authorize="isAuthenticated()">
+    <a th:href="@{/profile}"><i class="fas fa-user"></i> Моят профил</a>
+    <a th:href="@{/cart}"><i class="fas fa-shopping-cart"></i> Количка</a>
+    <a th:href="@{/favorites}"><i class="fas fa-heart"></i> Любими</a>
+
+    <form th:action="@{/logout}" method="post" style="display: inline;">
+        <button type="submit" class="nav-btn logout-btn">
+            <i class="fas fa-right-from-bracket"></i> Изход
+        </button>
+    </form>
+</span>
+
+
+    </div>
+</header>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">ReLove</div>
+
+        <ul class="footer-links">
+            <li><a th:href="@{/}">Начало</a></li>
+            <li><a th:href="@{/products/all}">Продукти</a></li>
+            <li><a th:href="@{/about}">За нас</a></li>
+            <li><a th:href="@{/contacts}">Контакт</a></li>
+        </ul>
+
+        <div class="footer-socials">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+
+        <p class="footer-copy">© ReLove 2025, Всички права запазени.</p>
+    </div>
+</footer>
+
+</body>
+</html>

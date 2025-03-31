@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>За нас - ReLove</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<!-- Вмъкване на Header -->
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="about-section" style="padding: 80px 20px; max-width: 900px; margin: auto; background: white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 36px; color: #aa5d74; margin-bottom: 20px;">За нас</h2>
+    <p style="font-size: 18px; color: #555; line-height: 1.8; margin-bottom: 25px;">ReLove е създаден с идеята да вдъхне нов живот на вече обичаните дрехи и да промени начина, по който възприемаме модата.</p>
+    <p style="font-size: 18px; color: #555; line-height: 1.8; margin-bottom: 25px;">Ние вярваме в устойчивостта, индивидуалния стил и в това, че модата може да бъде едновременно красива и отговорна към природата.</p>
+    <p style="font-size: 18px; color: #555; line-height: 1.8; margin-bottom: 25px;">Присъедини се към нашата общност и стани част от промяната!</p>
+
+    <div class="decorative-divider">✽ ✽ ✽</div>
+
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 36px; color: #aa5d74; margin-bottom: 20px;">Нашата мисия</h2>
+    <p style="font-size: 18px; color: #555; line-height: 1.8; margin-bottom: 25px;">Да създадем място, където всеки може лесно да продава и купува вече обичани дрехи, като така допринася за един по-устойчив и етичен свят.</p>
+
+    <!-- Икони секция -->
+    <div style="display: flex; justify-content: center; gap: 50px; margin-top: 40px; margin-bottom: 20px;">
+        <div style="text-align: center;">
+            <i class="fas fa-leaf" style="font-size: 50px; color: #aa5d74; margin-bottom: 10px;"></i>
+            <p style="font-size: 16px; color: #555;">Устойчивост</p>
+        </div>
+        <div style="text-align: center;">
+            <i class="fas fa-heart" style="font-size: 50px; color: #aa5d74; margin-bottom: 10px;"></i>
+            <p style="font-size: 16px; color: #555;">Любов към модата</p>
+        </div>
+        <div style="text-align: center;">
+            <i class="fas fa-recycle" style="font-size: 50px; color: #aa5d74; margin-bottom: 10px;"></i>
+            <p style="font-size: 16px; color: #555;">Кръгова мода</p>
+        </div>
+    </div>
+</section>
+
+<!-- Вмъкване на Footer -->
+<div th:replace="fragments/commons :: footer"></div>
+
+</body>
+</html>

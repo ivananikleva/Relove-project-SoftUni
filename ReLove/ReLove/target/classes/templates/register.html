@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Регистрация - ReLove</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="form-section">
+    <div class="form-container">
+        <h2>Регистрация</h2>
+        <form th:action="@{/register}" th:method="post"
+              th:object="${registerData}">
+            <div class="input-group">
+                <label for="name">Име</label>
+                <input type="text"
+                       id="name"
+                       name="name"
+                       th:field="*{name}"
+                       th:errorclass="'is-invalid alert-danger'">
+                <small class="invalid-feedback text-danger">Моля въведете валидно име с дължина между 3 и 25 символа</small>
+            </div>
+            <div class="input-group">
+                <label for="email">Имейл</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       th:field="*{email}"
+                       th:errorclass="'is-invalid alert-danger'">
+                <small class="invalid-feedback text-danger">Моля въведете валиден имейл адрес</small>
+            </div>
+            <div class="input-group">
+                <label for="password">Парола</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       th:field="*{password}"
+                       th:errorclass="'is-invalid alert-danger'">
+                <small class="invalid-feedback text-danger">Моля въведете валидна парола с дължина между 3 и 25 символа</small>
+            </div>
+            <button type="submit" class="submit-btn">Регистрирай се</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="fragments/commons :: footer"></div>
+
+</body>
+</html>

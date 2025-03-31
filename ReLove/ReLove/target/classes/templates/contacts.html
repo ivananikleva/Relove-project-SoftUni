@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Контакти - ReLove</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<!-- Вмъкване на Header -->
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="contact-section" style="padding: 80px 20px; max-width: 900px; margin: auto; background: white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 36px; color: #aa5d74; margin-bottom: 20px;">Контакти</h2>
+    <p style="font-size: 18px; color: #555; line-height: 1.8; margin-bottom: 25px;">Свържи се с нас, ако имаш въпроси или нужда от помощ. Ние сме тук за теб!</p>
+
+    <div style="display: flex; flex-direction: column; gap: 25px; margin-top: 40px;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; color: #555; font-size: 18px;">
+            <i class="fas fa-envelope" style="color: #aa5d74; font-size: 24px;"></i>
+            <span>info@relove.bg</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; color: #555; font-size: 18px;">
+            <i class="fas fa-phone-alt" style="color: #aa5d74; font-size: 24px;"></i>
+            <span>+359 888 123 456</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; color: #555; font-size: 18px;">
+            <i class="fas fa-map-marker-alt" style="color: #aa5d74; font-size: 24px;"></i>
+            <span>ул. „Устойчивост“ №7, София, България</span>
+        </div>
+    </div>
+
+    <div class="decorative-divider">✽ ✽ ✽</div>
+</section>
+
+<!-- Вмъкване на Footer -->
+<div th:replace="fragments/commons :: footer"></div>
+
+</body>
+</html>

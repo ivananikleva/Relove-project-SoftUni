@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ReLove - Устойчива мода</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<!-- Вмъкване на Header -->
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="hero">
+    <h1>ReLove</h1>
+    <p>Платформа за устойчива мода, където можеш да купуваш и продаваш вече обичани дрехи, като даваш на модата втори живот.</p>
+    <a th:href="@{/products/all}" class="explore-btn">Разгледай</a>
+
+</section>
+
+<div class="decorative-divider">✽ ✽ ✽</div>
+
+<section class="section">
+    <h2>Дай втори живот на дрехите си</h2>
+    <p>Присъедини се към общност, която вярва в устойчивостта и стила. Продай дрехите, които вече не носиш, и открий уникална, вече обичана мода на достъпни цени.</p>
+</section>
+
+<div class="decorative-divider">✽ ✽ ✽</div>
+
+<section class="products-section">
+    <h2>Представени продукти</h2>
+    <p>Разгледай нови и популярни продукти</p>
+
+    <div class="horizontal-scroll-wrapper">
+        <div class="product-carousel">
+            <button class="scroll-btn left-btn"><i class="fas fa-chevron-left"></i></button>
+
+            <div class="scroll-wrapper">
+                <ul class="products" th:if="${featuredProducts}">
+                    <li class="product" th:each="product : ${featuredProducts}">
+                        <a th:href="@{/products/details/{id}(id=${product.id})}" class="product-link">
+                            <img th:src="${product.imageUrl}" alt="Продукт">
+                            <div class="product-info">
+                                <h3 th:text="${product.name}">Име на продукт</h3>
+                                <p th:text="${#numbers.formatDecimal(product.price, 1, 2) + ' лева'}">Цена</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+            <button class="scroll-btn right-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Вмъкване на Footer -->
+<div th:replace="fragments/commons :: footer"></div>
+
+<script>
+    const scrollWrapper = document.querySelector('.scroll-wrapper');
+    const leftBtn = document.querySelector('.left-btn');
+    const rightBtn = document.querySelector('.right-btn');
+
+    leftBtn.addEventListener('click', () => {
+        scrollWrapper.scrollBy({ left: -320, behavior: 'smooth' });
+    });
+
+    rightBtn.addEventListener('click', () => {
+        scrollWrapper.scrollBy({ left: 320, behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>

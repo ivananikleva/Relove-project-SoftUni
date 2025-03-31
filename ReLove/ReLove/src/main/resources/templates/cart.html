@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Количка - ReLove</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body th:attr="data-user-email=${#authentication.principal.username}">
+
+<!-- Вмъкване на Header -->
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="profile-section">
+    <h2 class="section-title">Количка</h2>
+
+    <div class="product-list" id="cart-items">
+        <div th:each="cartItem : ${cartItems}" class="product-item"
+             th:attr="data-product-id=${cartItem.productId}, data-price=${cartItem.price}">
+            <div class="product-info">
+                <img th:src="${cartItem.imageUrl}" alt="Продукт" class="product-image">
+                <div class="product-details">
+                    <div class="product-name" th:text="${cartItem.productName}">Име на продукт</div>
+                    <div class="product-price">Цена: <span th:text="${#numbers.formatDecimal(cartItem.price, 1, 2)}">0.00</span> лв.</div>
+
+                    <label>Количество:</label>
+                    <input type="number" class="quantity-input" min="1" th:value="${cartItem.quantity}" />
+                </div>
+            </div>
+
+            <!-- Премахване от количката -->
+            <form th:action="@{/remove-from-cart/{id}(id=${cartItem.productId})}" method="post">
+                <button type="submit" class="remove-btn">Премахни</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Обща цена -->
+    <div class="cart-total" style="margin-top: 20px;">
+        <strong>Обща стойност:</strong>
+        <span id="total-price">0.00 лв.</span>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <form th:action="@{/orders/create}" method="post">
+            <button type="submit" class="explore-btn">Поръчай</button>
+        </form>
+
+    </div>
+</section>
+
+<!-- Вмъкване на Footer -->
+<div th:replace="fragments/commons :: footer"></div>
+
+<!-- Loader -->
+<div id="loader" class="loader-overlay" style="display: none;">
+    <div class="loader"></div>
+</div>
+
+<!-- JS -->
+<script>
+    const quantityInputs = document.querySelectorAll('.quantity-input');
+    const cartItems = document.querySelectorAll('.product-item');
+    const totalPriceEl = document.getElementById('total-price');
+    const loader = document.getElementById('loader');
+    const userEmail = document.body.dataset.userEmail;
+
+    function calculateTotal() {
+        let total = 0;
+        cartItems.forEach(item => {
+            const price = parseFloat(item.dataset.price);
+            const quantity = parseInt(item.querySelector('.quantity-input').value);
+            total += price * quantity;
+        });
+        totalPriceEl.textContent = total.toFixed(2) + ' лв.';
+    }
+
+    function sendQuantityUpdate(productId, quantity) {
+    loader.style.display = 'flex';
+
+    fetch('/api/cart', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            productId: productId,
+            quantity: quantity
+        })
+    })
+    .then(response => {
+        loader.style.display = 'none';
+        if (!response.ok) {
+            throw new Error();
+        }
+    })
+    .catch(() => {
+        loader.style.display = 'none';
+        alert('Грешка при обновяване на количеството!');
+    });
+}
+
+
+    quantityInputs.forEach(input => {
+        input.addEventListener('change', event => {
+            const newQuantity = parseInt(event.target.value);
+            const productId = event.target.closest('.product-item').dataset.productId;
+            if (newQuantity > 0) {
+                sendQuantityUpdate(productId, newQuantity);
+                calculateTotal();
+            }
+        });
+    });
+
+    // Начално изчисление
+    calculateTotal();
+</script>
+
+</body>
+</html>
