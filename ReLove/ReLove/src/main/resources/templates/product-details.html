@@ -11,7 +11,6 @@
 
     <!-- Основен стил -->
     <link rel="stylesheet" href="/css/style.css">
-
 </head>
 <body>
 
@@ -35,12 +34,12 @@
                     <i class="fas fa-shopping-cart"></i> Добави в количка
                 </a>
                 <span th:if="${#authentication.authenticated}">
-        <a th:if="${isFavorite == false}" th:href="@{/add-to-favorites/{id}(id=${product.id})}" class="btn">
-            <i class="fas fa-heart"></i> Добави в любими
-        </a>
-        <a th:if="${isFavorite == true}" th:href="@{/remove-favorite/{id}(id=${product.id})}" class="btn">
-            <i class="fas fa-heart-broken"></i> Премахни от любими
-        </a>
+                    <a th:if="${isFavorite == false}" th:href="@{/add-to-favorites/{id}(id=${product.id})}" class="btn">
+                        <i class="fas fa-heart"></i> Добави в любими
+                    </a>
+                    <a th:if="${isFavorite == true}" th:href="@{/remove-favorite/{id}(id=${product.id})}" class="btn">
+                        <i class="fas fa-heart-broken"></i> Премахни от любими
+                    </a>
                 </span>
             </div>
         </div>
@@ -52,40 +51,52 @@
         <h3>Ревюта</h3>
 
         <!-- Динамичен лист с ревюта -->
-        <!--   <div th:each="review : ${reviews}" class="review-item">
-               <p><strong th:text="${review.userEntity.name}">Потребител</strong>:</p>
-               <p th:text="${review.comment}">Коментар...</p>
-               <p>Оценка: <span th:text="${review.rating}">5</span>/5</p>
-           </div> -->
+        <div th:if="${#lists.isEmpty(reviews)}">
+            <p>Все още няма ревюта за този продукт.</p>
+        </div>
+        <div th:each="review : ${reviews}" class="review-item">
+            <p><strong th:text="${review.user.name}">Потребител</strong>:</p>
+            <p th:text="${review.comment}">Коментар...</p>
+            <p>Оценка: <span th:text="${review.rating}">5</span>/5</p>
+        </div>
 
-           <!-- Форма за ново ревю -->
-        <form th:action="@{/add-review/{id}(id=${product.id})}" method="post">
-            <textarea name="comment" placeholder="Вашето ревю..." required></textarea><br><br>
-            <label>Оценка:
-                <select name="rating">
-                    <option value="5">5</option>
-                    <option value="4">4</option>
-                    <option value="3">3</option>
-                    <option value="2">2</option>
-                    <option value="1">1</option>
-                </select>
-            </label><br><br>
-            <button type="submit" class="btn">Добави ревю</button>
-        </form>
+        <!-- Форма за ново ревю -->
+        <div th:if="${#authentication.authenticated}">
+            <form th:action="@{/reviews}" method="post" th:object="${reviewDTO}">
+                <input type="hidden" th:field="*{productId}" />
 
+                <label for="comment">Вашето ревю:</label><br>
+                <textarea th:field="*{comment}" placeholder="Споделете вашето мнение..." required></textarea><br><br>
+
+                <label for="rating">Оценка:
+                    <select th:field="*{rating}">
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                    </select>
+                </label><br><br>
+
+                <button type="submit" class="btn">Добави ревю</button>
+            </form>
+        </div>
+        <div th:if="${!#authentication.authenticated}">
+            <p>Само влезли потребители могат да оставят ревю.</p>
+        </div>
     </div>
 
     <div class="product-actions" style="margin-top: 40px;">
         <a th:href="@{/products/all}" class="explore-btn">← Назад към всички продукти</a>
 
         <span th:if="${#authentication.principal.username == product.seller.email}">
-          <a th:href="@{/products/edit/{id}(id=${product.id})}" class="edit-btn" >Редактирай</a>
-        <a th:href="@{/delete-product/{id}(id=${product.id})}" class="remove-btn">Премахни</a>
-    </span>
+            <a th:href="@{/products/edit/{id}(id=${product.id})}" class="edit-btn">Редактирай</a>
+            <a th:href="@{/delete-product/{id}(id=${product.id})}" class="remove-btn">Премахни</a>
+        </span>
     </div>
 </section>
 
-
+<!-- Footer -->
 <div th:replace="fragments/commons :: footer"></div>
 
 </body>

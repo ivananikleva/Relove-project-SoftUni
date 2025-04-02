@@ -1,9 +1,10 @@
 package com.relove.controller;
 
 import com.relove.model.dto.ProductAddDTO;
+import com.relove.model.dto.ReviewDTO;
 import com.relove.model.entity.Product;
-import com.relove.model.entity.UserEntity;
 import com.relove.service.ProductService;
+import com.relove.service.ReviewService;
 import com.relove.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,10 +23,12 @@ public class ProductController {
 
     private final ProductService productService;
     private final UserService userService;
+    private final ReviewService reviewService;
 
-    public ProductController(ProductService productService, UserService userService) {
+    public ProductController(ProductService productService, UserService userService, ReviewService reviewService) {
         this.productService = productService;
         this.userService = userService;
+        this.reviewService = reviewService;
     }
 
     @ModelAttribute("productAddDTO")
@@ -80,7 +83,14 @@ public class ProductController {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
         model.addAttribute("product", product);
-        model.addAttribute("reviews", product.getReviews());
+
+        model.addAttribute("reviews", reviewService.getReviewsForProduct(id));
+
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setProductId(id);
+        model.addAttribute("reviewDTO", reviewDTO);
+
+
 
         if (principal != null) {
             boolean isFavorite = userService.isProductFavorite(principal.getName(), id);
