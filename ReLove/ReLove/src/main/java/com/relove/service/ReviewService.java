@@ -40,4 +40,21 @@ public class ReviewService {
         Product product = productRepo.findById(productId).orElseThrow();
         return reviewRepo.findByProduct(product);
     }
+
+    public void deleteReviewById(Long reviewId, String userEmail) {
+        Review review = reviewRepo.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+
+        if (!review.getUser().getEmail().equals(userEmail)) {
+            throw new RuntimeException("Not authorized to delete this review");
+        }
+
+        reviewRepo.delete(review);
+    }
+
+    public Long getProductIdByReviewId(Long reviewId) {
+        return reviewRepo.findById(reviewId)
+                .map(r -> r.getProduct().getId())
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+    }
 }

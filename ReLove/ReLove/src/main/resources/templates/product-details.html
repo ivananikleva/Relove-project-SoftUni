@@ -58,6 +58,12 @@
             <p><strong th:text="${review.user.name}">Потребител</strong>:</p>
             <p th:text="${review.comment}">Коментар...</p>
             <p>Оценка: <span th:text="${review.rating}">5</span>/5</p>
+
+            <form th:if="${#authentication.principal.username == review.user.email}"
+                  th:action="@{/reviews/delete/{id}(id=${review.id})}" method="post"
+                  style="margin-top: 5px;">
+                <button type="submit" class="remove-btn">Изтрий ревю</button>
+            </form>
         </div>
 
         <!-- Форма за ново ревю -->

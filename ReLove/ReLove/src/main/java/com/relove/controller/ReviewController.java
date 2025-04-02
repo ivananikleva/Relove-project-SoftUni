@@ -25,10 +25,11 @@ public class ReviewController {
         return "redirect:/products/details/" + reviewDTO.getProductId();
     }
 
-    @GetMapping("/{productId}")
-    public String getReviews(@PathVariable Long productId, Model model) {
-        List<Review> reviews = reviewService.getReviewsForProduct(productId);
-        model.addAttribute("reviews", reviews);
-        return "fragments/reviews :: reviewList";
+
+    @PostMapping("/delete/{id}")
+    public String deleteReview(@PathVariable Long id, Principal principal) {
+        Long productId = reviewService.getProductIdByReviewId(id);
+        reviewService.deleteReviewById(id, principal.getName());
+        return "redirect:/products/details/" + productId;
     }
 }
