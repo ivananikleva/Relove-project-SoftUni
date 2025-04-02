@@ -20,7 +20,7 @@
     <div class="confirmation-card">
         <i class="fas fa-check-circle confirmation-icon"></i>
         <h2 class="confirmation-title">Благодарим ви за поръчката!</h2>
-        <p class="confirmation-message">Вашата поръчка беше приета успешно на <span th:text="${orderDate}">дата</span>.</p>
+        <p class="confirmation-message">Вашата поръчка беше приета успешно на <span th:text="${#temporals.format(orderDate, 'dd.MM.yyyy г. в HH:mm')}">дата</span>.</p>
         <a href="/" class="explore-btn">Продължи с разглеждане</a>
     </div>
 </section>

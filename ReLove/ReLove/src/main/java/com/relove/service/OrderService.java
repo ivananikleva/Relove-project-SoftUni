@@ -32,7 +32,7 @@ public class OrderService {
         this.userRepo = userRepo;
     }
 
-    public void createOrder(String userEmail) {
+    public Order createOrder(String userEmail) {
         UserEntity buyer = userRepo.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -44,6 +44,7 @@ public class OrderService {
 
         Order order = new Order();
         order.setBuyer(buyer);
+
         List<OrderItem> orderItems = new ArrayList<>();
 
         for (CartItemDTO item : cartItems) {
@@ -59,8 +60,11 @@ public class OrderService {
         }
 
         order.setItems(orderItems);
-        orderRepo.save(order);
+        orderRepo.save(order); // <-- save ще попълни и ID-то
 
         cartClient.clearCart(userEmail);
+
+        return order; // <-- ВРЪЩАМЕ Order
     }
+
 }

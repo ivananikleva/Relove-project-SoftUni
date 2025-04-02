@@ -1,5 +1,6 @@
 package com.relove.controller;
 
+import com.relove.model.entity.Order;
 import com.relove.model.entity.Product;
 import com.relove.model.entity.UserEntity;
 import com.relove.service.CartService;
@@ -14,24 +15,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.Principal;
 import java.util.List;
 
-@Controller
-@RequestMapping("/orders")
-public class OrderController {
-    private final OrderService orderService;
+    @Controller
+    @RequestMapping("/orders")
+    public class OrderController {
 
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
+        private final OrderService orderService;
+
+        public OrderController(OrderService orderService) {
+            this.orderService = orderService;
+        }
+
+        @PostMapping("/create")
+        public String createOrder(Principal principal, Model model) {
+            Order order = orderService.createOrder(principal.getName());
+
+            model.addAttribute("orderDate", order.getCreatedAt());
+
+            return "order-confirmation";
+        }
     }
 
-    @PostMapping("/create")
-    public String createOrder(Principal principal) {
-        String email = principal.getName();
-        orderService.createOrder(email);
-        return "redirect:/orders/confirmation";
-    }
-
-    @GetMapping("/confirmation")
-    public String showConfirmation() {
-        return "order-confirmation";
-    }
-}
