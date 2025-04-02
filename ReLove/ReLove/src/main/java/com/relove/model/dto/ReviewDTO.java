@@ -1,11 +1,9 @@
 package com.relove.model.dto;
 
-import jakarta.validation.constraints.NotBlank;
 
 public class ReviewDTO {
     private int rating;
 
-    @NotBlank
     private String comment;
 
     private Long productId;
