@@ -67,4 +67,8 @@ public class OrderService {
         return order; // <-- ВРЪЩАМЕ Order
     }
 
+    public List<Order> getOrdersByUser(String userEmail) {
+        return orderRepo.findAllByBuyerEmailWithItemsAndProducts(userEmail);
+    }
+
 }

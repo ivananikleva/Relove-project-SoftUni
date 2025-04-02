@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Моите поръчки - ReLove</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="profile-section">
+    <h2 class="section-title">Моите поръчки</h2>
+
+    <div th:if="${orders.isEmpty()}">
+        <p>Все още нямате направени поръчки.</p>
+    </div>
+
+    <div th:each="order : ${orders}" class="order-card">
+        <h3>Поръчка от <span th:text="${#temporals.format(order.createdAt, 'dd.MM.yyyy HH:mm')}"></span></h3>
+
+        <ul>
+            <li th:each="item : ${order.items}">
+                <span th:text="${item.product.name}">Продукт</span> –
+                <span th:text="${item.quantity}">1</span> бр. –
+                <span th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 1, 2)} + ' лв.'">Цена</span>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<div th:replace="fragments/commons :: footer"></div>
+</body>
+</html>

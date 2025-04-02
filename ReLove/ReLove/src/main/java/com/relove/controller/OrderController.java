@@ -33,5 +33,14 @@ import java.util.List;
 
             return "order-confirmation";
         }
+
+        @GetMapping("/my-orders")
+        public String myOrders(Principal principal, Model model) {
+            String email = principal.getName();
+            List<Order> orders = orderService.getOrdersByUser(email);
+            model.addAttribute("orders", orders);
+            return "my-orders";
+        }
+
     }
 
