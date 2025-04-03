@@ -1,14 +1,12 @@
 package com.relove.controller;
 
 import com.relove.model.dto.ReviewDTO;
-import com.relove.model.entity.Review;
 import com.relove.service.ReviewService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
+
 
 @Controller
 @RequestMapping("/reviews")

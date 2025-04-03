@@ -27,7 +27,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
     private List<Order> orders;
 
-    // Любими продукти
+
     @ManyToMany
     @JoinTable(
             name = "favorites",
@@ -35,6 +35,14 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private Set<Product> favoriteProducts;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<RoleEntity> roles = new HashSet<>();
 
     public UserEntity() {
         this.favoriteProducts = new HashSet<>();
@@ -96,6 +104,18 @@ public class UserEntity {
 
     public void setFavoriteProducts(Set<Product> favoriteProducts) {
         this.favoriteProducts = favoriteProducts;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Set<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<RoleEntity> roles) {
+        this.roles = roles;
     }
 }
 
