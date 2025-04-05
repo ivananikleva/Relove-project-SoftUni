@@ -53,6 +53,8 @@ public class UserController {
         boolean success = userService.register(data);
 
         if (!success) {
+            redirectAttributes.addFlashAttribute("registerData", data);
+            redirectAttributes.addFlashAttribute("userExistsError", "Този имейл или потребител вече съществува.");
             return "redirect:/register";
         }
 
