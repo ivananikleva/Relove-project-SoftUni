@@ -60,15 +60,19 @@ public class OrderService {
         }
 
         order.setItems(orderItems);
-        orderRepo.save(order); // <-- save ще попълни и ID-то
+        orderRepo.save(order);
 
         cartClient.clearCart(userEmail);
 
-        return order; // <-- ВРЪЩАМЕ Order
+        return order;
     }
 
     public List<Order> getOrdersByUser(String userEmail) {
         return orderRepo.findAllByBuyerEmailWithItemsAndProducts(userEmail);
+    }
+
+    public List<Order> getAllOrders() {
+        return orderRepo.findAllWithItemsAndBuyer();
     }
 
 }

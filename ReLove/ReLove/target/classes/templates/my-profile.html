@@ -29,6 +29,13 @@
         <a th:href="@{/favorites}">Любими продукти</a>
         <a th:href="@{/products/add}">Добави продукт</a>
     </div>
+
+
+    <div class="admin-section" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <h3>Админ панел</h3>
+        <a th:href="@{/admin/users}" class="admin-btn">Всички потребители</a>
+        <a th:href="@{/admin/orders}" class="admin-btn">Всички поръчки</a>
+    </div>
 </section>
 
 <div th:replace="fragments/commons :: footer"></div>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Всички поръчки - ReLove</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="admin-section">
+    <h2>Всички поръчки</h2>
+    <p class="order-count">Общо поръчки: <span th:text="${orders.size()}">0</span></p>
+
+    <table class="admin-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Купувач</th>
+            <th>Дата</th>
+            <th>Продукти</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}">1</td>
+            <td th:text="${order.buyer.name}">Петър</td>
+            <td th:text="${#temporals.format(order.createdAt, 'dd.MM.yyyy HH:mm')}">01.01.2025</td>
+            <td>
+                <ul>
+                    <li th:each="item : ${order.items}" th:text="${item.product.name + ' x' + item.quantity}">Продукт</li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<div th:replace="fragments/commons :: footer"></div>
+
+</body>
+</html>

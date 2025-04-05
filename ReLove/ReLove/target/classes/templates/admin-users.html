@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Всички потребители - ReLove</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<div th:replace="fragments/commons :: header"></div>
+
+<section class="admin-section">
+    <h2>Всички потребители</h2>
+
+
+    <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+    <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
+
+    <table class="admin-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Име</th>
+            <th>Email</th>
+            <th>Роли</th>
+            <th>Действие</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.name}">Иван</td>
+            <td th:text="${user.email}">ivan@example.com</td>
+            <td>
+                <ul>
+                    <li th:each="role : ${user.roles}" th:text="${role.role}">USER</li>
+                </ul>
+            </td>
+            <td>
+                <form th:action="@{/admin/users/change-role/{id}(id=${user.id})}" method="post">
+                    <button type="submit" class="btn-small">
+            <span th:if="${#lists.contains(user.roles.![role.name()], 'ADMIN')}">
+                Направи потребител
+            </span>
+                        <span th:unless="${#lists.contains(user.roles.![role.name()], 'ADMIN')}">
+                Направи админ
+            </span>
+                    </button>
+                </form>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- Footer -->
+<div th:replace="fragments/commons :: footer"></div>
+
+</body>
+</html>

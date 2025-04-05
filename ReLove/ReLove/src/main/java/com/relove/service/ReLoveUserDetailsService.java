@@ -2,6 +2,8 @@ package com.relove.service;
 
 import com.relove.model.entity.UserEntity;
 import com.relove.repo.UserRepo;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,9 +27,13 @@ public class ReLoveUserDetailsService implements UserDetailsService {
     }
 
     private static UserDetails map(UserEntity userEntity) {
+        var authorities = userEntity.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole().name()))
+                .toList();
+
         return User.withUsername(userEntity.getEmail())
                 .password(userEntity.getPassword())
-                .authorities(List.of())
+                .authorities(authorities)
                 .disabled(false)
                 .build();
     }

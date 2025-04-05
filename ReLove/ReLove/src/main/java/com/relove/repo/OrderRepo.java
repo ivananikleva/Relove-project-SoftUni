@@ -15,4 +15,11 @@ public interface OrderRepo extends JpaRepository<Order, Long> {
             "ORDER BY o.createdAt DESC")
     List<Order> findAllByBuyerEmailWithItemsAndProducts(@Param("email") String email);
 
+    @Query("SELECT DISTINCT o FROM Order o " +
+            "LEFT JOIN FETCH o.items i " +
+            "LEFT JOIN FETCH i.product " +
+            "LEFT JOIN FETCH o.buyer " +
+            "ORDER BY o.createdAt DESC")
+    List<Order> findAllWithItemsAndBuyer();
+
 }
