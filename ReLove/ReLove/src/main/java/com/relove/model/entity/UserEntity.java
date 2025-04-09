@@ -16,6 +16,7 @@ public class UserEntity {
 
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
@@ -46,6 +47,13 @@ public class UserEntity {
 
     public UserEntity() {
         this.favoriteProducts = new HashSet<>();
+        this.roles = new HashSet<>();
+    }
+
+    public UserEntity(String email, String password) {
+        super();
+        this.email = email;
+        this.password = password;
     }
 
 

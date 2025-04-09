@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: test
+
   jpa:
     properties:
       hibernate:
@@ -13,6 +16,19 @@ spring:
     password: '123456'
     username: 'root'
     url: jdbc:mysql://localhost:3306/relove?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+
+
+  test:
+    datasource:
+      driverClassName: org.h2.Driver
+      url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      username: sa
+      password: password
+    jpa:
+      hibernate:
+        ddl-auto: create-drop
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
 
   mvc:
     locale: bg
@@ -45,3 +61,10 @@ cart:
 
 server:
   port: 8080
+
+  server:
+    error:
+      whitelabel:
+        enabled: false
+      path: /error
+

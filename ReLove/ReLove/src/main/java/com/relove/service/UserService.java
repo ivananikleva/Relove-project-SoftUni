@@ -125,6 +125,7 @@ public class UserService {
         return userRepo.findAll();
     }
 
+    @Transactional
     public void toggleUserRole(Long userId) {
         UserEntity user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -136,10 +137,12 @@ public class UserService {
         RoleEntity userRole = roleRepo.findByRole(UserRoleEnum.USER)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
 
+
         if (roles.contains(adminRole)) {
-            roles.clear();
+            roles.remove(adminRole);
             roles.add(userRole);
         } else {
+            roles.remove(userRole);
             roles.add(adminRole);
         }
 
